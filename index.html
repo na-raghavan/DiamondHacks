@@ -76,8 +76,8 @@ var markers = [];
           }],
           disableDoubleClickZoom: true,
           streetViewControl: false,
+          fullscreenControl: false
         });
-        infoWindow = new google.maps.InfoWindow();
         const locationButton = document.createElement("button");
             locationButton.textContent = "Locate";
             locationButton.classList.add("custom-map-control-button");
@@ -103,7 +103,6 @@ var markers = [];
                             strokeColor: '#ffffff',
                         },
                         });
-                    infoWindow.open(map);
                     map.setCenter(pos);
                 },
                 () => {
@@ -121,7 +120,6 @@ var markers = [];
           data.lng = e.latLng.lng();
           console.log("Clicked data: ", data);
           addToFirebase(data);
-          
         });
 
         initAuthentication(initFirebase.bind(undefined, map));
@@ -150,8 +148,17 @@ var markers = [];
             // Add the point to the heatmap.
             var marker = new google.maps.Marker({
               position: point,
-              map: map
+              map: map,
+              clickable: true
             });
+
+//             marker.info = new google.maps.InfoWindow({
+//             content: '<b>Speed:</b> '
+//             });
+
+//             google.maps.event.addListener(marker, 'click', function() {
+//   marker.info.open(map, marker);
+// });
 
             markers.push(marker);
 
